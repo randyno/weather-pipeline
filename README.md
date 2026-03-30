@@ -15,18 +15,27 @@ Astro CLI (Airflow léger) · dbt · DuckDB · Streamlit · Docker
 
 ## Structure du repo :
   weather-pipeline/
+  
   ├── dags/         → weather_dag.py
+  
   ├── dbt/
+  
   │   ├── models/
+  
   │   │   ├── staging/
+  
   │   │   └── mart/
+  
   │   └── tests/
+  
   ├── data/raw/
+  
   ├── dashboard/    → app.py
+  
   ├── Dockerfile
+  
   └── README.md
-
-
+  
 ── CE QU'IL RESTE À DÉCIDER ───────────────
 
   • Quelle(s) ville(s) ? → Paris + une autre suggérée
