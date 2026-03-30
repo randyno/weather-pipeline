@@ -1,0 +1,13 @@
+services:
+  weather-db: 
+    build: .
+    ports:
+      - "5000:5000"
+    
+    # 2. Persistance des données (Dossiers partagés)
+    volumes:
+      - ./data/raw/:/app/data/raw/
+    user: root
+    restart: always
+    command: ["python3", "main.py"]
+    
