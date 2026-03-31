@@ -1,2 +1,9 @@
 .gitignore
+lecons.md
+dags/
+Dashboard/
+data/
+dbt/
+*.csv
+*.json
 README.md

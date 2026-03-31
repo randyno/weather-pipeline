@@ -1,9 +1,12 @@
 services:
   weather-db: 
-    build: ./weather-db
+    build: 
+      context: ./weather-db/
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:
-      - ./data/raw/:/app/data/raw/
+      - ./data/:/app/data/
     command: ["python3", "main.py"]
+    restart: no
     

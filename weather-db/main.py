@@ -1,8 +1,9 @@
 import requests
 from datetime import datetime, timedelta
+import csv
 import json
 
-def get_weather():
+def get_weather_data():
     """Fetch weather data from the Open-Meteo API and return it as JSON.
     Returns:
         dict: A dictionary containing the weather data.
@@ -27,9 +28,44 @@ def get_weather():
     else:
         print(f"Error fetching weather data: {response.status_code}")
         return None
+
+def json_to_csv(json_file_name):
+    """Extracts only the useful weather data from the JSON dictionnary
+     and saves it as a .csv file in /data/dbt_raw/ for the dbt pipelines.
+    Args:
+        json_data (dict): The JSON data containing the weather information collected from Open-Meteo API.
+    """
+    rep = '/app/data/'
+    with open(f'{rep}/raw/{json_file_name}.json', 'r') as f:
+        json_data = json.load(f)
     
+    if json_data is not None:
+        hourly_weather_data = json_data.get("hourly")
+        if hourly_weather_data:
+            times = hourly_weather_data['time']
+            temperature_2m = hourly_weather_data['temperature_2m']
+            relative_humidity_2m = hourly_weather_data['relative_humidity_2m']
+            apparent_temperature = hourly_weather_data['apparent_temperature']
+            rain = hourly_weather_data['rain']
+            cloud_cover = hourly_weather_data['cloud_cover']
+            wind_speed_10m = hourly_weather_data['wind_speed_10m']
+            precipitation = hourly_weather_data['precipitation']
+            header = ['time', 'temperature_2m', 'relative_humidity_2m', 'apparent_temperature', 'rain', 'cloud_cover', 'wind_speed_10m', 'precipitation']
+
+            rows = zip(times, temperature_2m, relative_humidity_2m, apparent_temperature, rain, cloud_cover, wind_speed_10m, precipitation)
+            with open(f'{rep}/dbt_raw/{json_file_name}.csv', mode = 'w' \
+                , newline = '') as raw_csv_file:
+                write = csv.writer(raw_csv_file)
+                write.writerow(header)
+                write.writerows(rows)
+                print(f"Weather data successfully saved to {rep}/dbt_raw/{json_file_name}.csv")
+
+            
 if __name__ == '__main__':
-    json_data = get_weather()
+    json_data = get_weather_data()
+    rep = '/app/data/'
+    json_file_name = f"open-meteo-{datetime.now().strftime('%Y-%m-%d %H-%M')}"
     if json_data:
-        with open(f'/app/data/raw/open-meteo-{datetime.now().strftime("%Y-%m-%d %H-%M")}.json', 'w') as f:
-            json.dump(json_data, f, indent=2)
+        with open(f'{rep}/raw/{json_file_name}.json', 'w') as f:
+            json.dump(json_data, f, indent=2) # Save data as Json file
+        json_to_csv(json_file_name) # Save data as CSV file for dbt pipelines

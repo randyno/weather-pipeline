@@ -5,10 +5,8 @@ WORKDIR /app
 # La racine contient des dossiers systèmes critiques : /bin, /etc, /var, /usr.
 # C'est pourquoi on cree un dossier /app pour eviter de polluer la racine.
 
-COPY requirements.txt ./requirements.txt
+COPY . .
 
 RUN pip install --no-cache-dir -r ./requirements.txt
-
-COPY . .
 
 EXPOSE 5000
