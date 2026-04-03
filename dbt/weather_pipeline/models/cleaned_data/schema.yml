@@ -1,0 +1,53 @@
+
+models:
+  - name: cleaned_weather
+    description: "Cleaned weather data with necessary transformations applied."
+    columns:
+      - name: pKey
+        type: string
+        description: "Primary key for the cleaned weather data, generated as a hash of day and datetime_hour."
+        data_tests:
+          - not_null
+          - unique
+      - name: date_hour
+        type: timestamp
+        data_tests:
+          - unique
+          - not_null
+      - name: day
+        type: date
+        data_tests:
+          - not_null
+      - name: _insertion_time
+        type: timestamp
+        description: "Timestamp of when the record was downloaded in the csv file."
+        data_tests:
+          - not_null
+      - name: temperature_2m
+        type: float
+        data_tests:
+          - not_null
+      - name: relative_humidity_2m
+        type: int
+        data_tests:
+          - not_null
+      - name: apparent_temperature
+        type: float
+        data_tests: 
+          - not_null
+      - name: rain
+        type: float
+        data_tests: 
+          - not_null
+      - name: cloud_cover
+        type: int
+        data_tests:
+          - not_null
+      - name: wind_speed_10m
+        type: float
+        data_tests:
+          - not_null
+      - name: precipitation
+        type: float
+        data_tests:
+          - not_null

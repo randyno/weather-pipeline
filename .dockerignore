@@ -7,3 +7,6 @@ dbt/
 *.csv
 *.json
 README.md
+.gitignore
+.dockerignore
+.git

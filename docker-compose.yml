@@ -16,4 +16,5 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./dbt/weather_pipeline/:/app/dbt/
+      - ./dbt:/app/dbt/
+      - ./data/dbt_raw:/app/data/dbt_raw/

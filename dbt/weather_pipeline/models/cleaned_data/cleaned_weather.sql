@@ -1,0 +1,34 @@
+
+
+{{ config(materialized='table') }}
+
+WITH source_data AS (
+    SELECT DISTINCT
+        datetime_hour AS pKey,
+        CAST(insertion_time AS TIMESTAMP) AS _insertion_time,
+        TO_DATE(datetime_hour, "YYYY-MM-DD") AS day,
+        CAST (datetime_hour AS TIMESTAMP) AS date_hour,
+        CAST(temperature_2m AS FLOAT) AS temperature_2m,
+        CAST(relative_humidity_2m AS INT64) AS humidity,
+        CAST(apparent_temperature AS FLOAT) AS apparent_temperature,
+        CAST(rain AS FLOAT) AS rain,
+        CAST(cloud_cover AS INT64) AS cloud_cover,
+        CAST(wind_speed_10m AS FLOAT) AS wind_speed,
+        precipitation 
+    FROM {{ source('open_meteo_data', 'raw_weather') }} ORDER BY day, date_hour
+)
+ordered_data AS(
+    SELECT 
+        source_data.*,
+        ROW_NUMBER() OVER(
+            PARTITION BY day, date_hour
+            ORDER BY _insertion_time DESC
+        ) AS most_recent
+    from source_data
+)
+
+SELECT
+    ordered_data.* EXCEPT(most_recent)
+FROM ordered_data
+WHERE most_recent = 1
+

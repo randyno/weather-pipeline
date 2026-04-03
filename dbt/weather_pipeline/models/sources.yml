@@ -1,0 +1,7 @@
+sources:
+  - name: open_meteo_data
+    description: "Source for the raw weather data fetched from the Open-Meteo API."
+    tables:
+      - name: raw_weather
+        description: "Raw hourly weather data including temperature, humidity, rain, cloud cover, wind speed, and precipitation."
+        external: "read_csv_auto('/app/data/dbt_raw/open-meteo*.csv')"

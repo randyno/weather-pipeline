@@ -36,13 +36,14 @@ def json_to_csv(json_file_name):
     Args:
         json_data (dict): The JSON data containing the weather information collected from Open-Meteo API.
     """
-    rep = '/app/data/'
+    rep, insertion_time = '/app/data/', f"{datetime.now().strftime('%Y-%m-%d %H-%M')}"
     with open(f'{rep}/raw/{json_file_name}.json', 'r') as f:
         json_data = json.load(f)
     
     if json_data is not None:
         hourly_weather_data = json_data.get("hourly")
         if hourly_weather_data:
+            _insertion_time = [insertion_time] * len(hourly_weather_data['time'])
             times = hourly_weather_data['time']
             temperature_2m = hourly_weather_data['temperature_2m']
             relative_humidity_2m = hourly_weather_data['relative_humidity_2m']
@@ -51,9 +52,9 @@ def json_to_csv(json_file_name):
             cloud_cover = hourly_weather_data['cloud_cover']
             wind_speed_10m = hourly_weather_data['wind_speed_10m']
             precipitation = hourly_weather_data['precipitation']
-            header = ['time', 'temperature_2m', 'relative_humidity_2m', 'apparent_temperature', 'rain', 'cloud_cover', 'wind_speed_10m', 'precipitation']
+            header = ['insertion_time', 'datetime_hour', 'temperature_2m', 'relative_humidity_2m', 'apparent_temperature', 'rain', 'cloud_cover', 'wind_speed_10m', 'precipitation']
 
-            rows = zip(times, temperature_2m, relative_humidity_2m, apparent_temperature, rain, cloud_cover, wind_speed_10m, precipitation)
+            rows = zip(_insertion_time, times, temperature_2m, relative_humidity_2m, apparent_temperature, rain, cloud_cover, wind_speed_10m, precipitation)
             with open(f'{rep}/dbt_raw/{json_file_name}.csv', mode = 'w' \
                 , newline = '') as raw_csv_file:
                 write = csv.writer(raw_csv_file)
