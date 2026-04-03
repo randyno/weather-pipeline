@@ -21,12 +21,13 @@ def get_weather_data():
         + f"&latitude={Latitude}&longitude={Longitude}" \
         + f"&{required_data}&{models}"
     
-    print(f"Fetching weather data from URL: {URL}")
+    print(f"Fetching weather data from URL: {URL}", flush=True)
     response = requests.get(URL)
     if response.status_code == 200:
+        print("Weather data successfully fetched from Open-Meteo API.", flush=True)
         return response.json()
     else:
-        print(f"Error fetching weather data: {response.status_code}")
+        print(f"Error fetching weather data: {response.status_code}", flush=True)
         return None
 
 def json_to_csv(json_file_name):
@@ -66,6 +67,8 @@ if __name__ == '__main__':
     rep = '/app/data/'
     json_file_name = f"open-meteo-{datetime.now().strftime('%Y-%m-%d %H-%M')}"
     if json_data:
+        print("Weather data successfully fetched from Open-Meteo API.")
         with open(f'{rep}/raw/{json_file_name}.json', 'w') as f:
             json.dump(json_data, f, indent=2) # Save data as Json file
+        print(f"Weather data successfully saved to {rep}/raw/{json_file_name}.json")
         json_to_csv(json_file_name) # Save data as CSV file for dbt pipelines
