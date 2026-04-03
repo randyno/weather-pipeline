@@ -9,4 +9,11 @@ services:
       - ./data/:/app/data/
     command: ["python3", "main.py"]
     restart: no
-    
+  dbt:
+    build:
+      context: ./dbt/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dbt/weather_pipeline/:/app/dbt/
