@@ -15,8 +15,9 @@ WITH source_data AS (
         CAST(cloud_cover AS INT64) AS cloud_cover,
         CAST(wind_speed_10m AS FLOAT) AS wind_speed,
         precipitation 
-    FROM {{ source('open_meteo_data', 'raw_weather') }} ORDER BY day, date_hour
-)
+    FROM {{ ref('raw_weather') }}
+    ORDER BY day, date_hour
+),
 ordered_data AS(
     SELECT 
         source_data.*,
@@ -28,7 +29,6 @@ ordered_data AS(
 )
 
 SELECT
-    ordered_data.* EXCEPT(most_recent)
+    ordered_data.*EXCLUDE(most_recent) --Use EXCEPT if we switch to BigQuery
 FROM ordered_data
 WHERE most_recent = 1
-

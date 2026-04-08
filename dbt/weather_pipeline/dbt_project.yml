@@ -30,15 +30,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  # raw_data:
-  #   raw_weather:
-  #     materialized: table # but already existing data in files
-  #     enabled: true
-  #     # source: true
-  cleaned_data:
-    cleaned_weather:
-      materialized: table
-      enabled: true
-      # source: true
-  analysis:
-      +materialized: table
+  weather_pipeline:
+    raw_data:
+      +schema: raw_data
+    cleaned_data:
+      +schema: cleaned_data
+        # source: true
+    analysis:
+        +materialized: table
