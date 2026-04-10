@@ -3,8 +3,8 @@ weather_pipeline: # Doit correspondre au nom 'profile:' dans dbt_project.yml
   outputs:
     dev:
       type: duckdb
-      path: /app/data/weather_dev.duckdb  
+      path: /app/data/dbt_raw/weather_dev.duckdb
     prod:
       type: duckdb
-      path: /app/data/weather_prod.duckdb  
+      path: /app/data/dbt_raw/weather_prod.duckdb
   target: dev 

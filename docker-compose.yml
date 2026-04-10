@@ -17,6 +17,8 @@ services:
       - "8080:8080"
     volumes:
       - ./data/dbt_raw:/app/data/dbt_raw/
-    working_dir: /app/dbt/
+      - ./dbt/weather_pipeline:/app/dbt/weather_pipeline/
+    working_dir: /app/dbt/weather_pipeline/
     environment:
-      - DBT_PROFILES_DIR=./weather_pipeline/
+      - DBT_PROFILES_DIR=/app/dbt/weather_pipeline/
+    command: ["dbt", "run", "--profiles-dir", "/app/dbt/weather_pipeline/"]

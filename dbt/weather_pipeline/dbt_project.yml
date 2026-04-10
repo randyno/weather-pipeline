@@ -36,5 +36,5 @@ models:
     cleaned_data:
       +schema: cleaned_data
         # source: true
-    analysis:
+    aggregated_data:
         +materialized: table

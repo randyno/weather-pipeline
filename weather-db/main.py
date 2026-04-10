@@ -9,10 +9,10 @@ def get_weather_data():
         dict: A dictionary containing the weather data.
     """
     base_url = "https://api.open-meteo.com/v1/forecast?"
-    start_date = datetime.now().date()
-    end_date = start_date + timedelta(days=1)
+    start_date = datetime(2026, 3, 1).strftime('%Y-%m-%d')
+    end_date = datetime.now().strftime('%Y-%m-%d')
     Latitude, Longitude = 49.683333, 1.400000  # Massy, France
-    # &latitude=52.52&longitude=13.41&
+    
     required_data = "hourly=temperature_2m,relative_humidity_2m,apparent_temperature,rain,cloud_cover,wind_speed_10m,precipitation"
     models = "models=meteofrance_seamless"
 
@@ -36,7 +36,7 @@ def json_to_csv(json_file_name):
     Args:
         json_data (dict): The JSON data containing the weather information collected from Open-Meteo API.
     """
-    rep, insertion_time = '/app/data/', f"{datetime.now().strftime('%Y-%m-%d %H-%M')}"
+    rep, insertion_time = '/app/data/', f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     with open(f'{rep}/raw/{json_file_name}.json', 'r') as f:
         json_data = json.load(f)
     

@@ -5,7 +5,6 @@ Dashboard/
 data/
 dbt/
 *.csv
-*.json
 README.md
 .gitignore
 .dockerignore

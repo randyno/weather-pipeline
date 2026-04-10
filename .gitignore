@@ -1,3 +1,6 @@
 data/raw/*
 data/dbt_raw/*
 dbt/logs/
+
+.vscode/
+.user.yml

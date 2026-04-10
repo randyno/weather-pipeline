@@ -4,9 +4,9 @@
 
 WITH source_data AS (
     SELECT DISTINCT
-        datetime_hour AS pKey,
+        CAST(datetime_hour AS STRING) AS pKey,
         CAST(insertion_time AS TIMESTAMP) AS _insertion_time,
-        TO_DATE(datetime_hour, "YYYY-MM-DD") AS day,
+        strftime(datetime_hour, '%Y-%m-%d') as day,
         CAST (datetime_hour AS TIMESTAMP) AS date_hour,
         CAST(temperature_2m AS FLOAT) AS temperature_2m,
         CAST(relative_humidity_2m AS INT64) AS humidity,
