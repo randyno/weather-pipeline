@@ -1,0 +1,15 @@
+models:
+  - name: daily_aggregates
+    columns:
+      - name: day
+        type: string
+        data_tests:
+          - not_null
+          - unique
+  - name: hourly_aggregates
+    columns:
+      - name: hours
+        type: string
+        data_tests:
+          - not_null
+          - unique

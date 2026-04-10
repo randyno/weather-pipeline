@@ -22,3 +22,14 @@ services:
     environment:
       - DBT_PROFILES_DIR=/app/dbt/weather_pipeline/
     command: ["dbt", "run", "--profiles-dir", "/app/dbt/weather_pipeline/"]
+  dashboards:
+    build:
+      context: ./Dashboards/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3080"
+    volumes:
+      - ./Dashboards:/app/Dashboards/
+      - ./data/dbt_raw:/app/data/
+    working_dir: /app/
+    command: ["streamlit", "run", "./Dashboards/app.py", "--server.port=3080"]

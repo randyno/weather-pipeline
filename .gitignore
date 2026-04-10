@@ -1,6 +1,11 @@
 data/raw/*
 data/dbt_raw/*
 dbt/logs/
+target/
 
+.devcontainer/
 .vscode/
 .user.yml
+
+*.duckdb
+*.duckdb.wal
