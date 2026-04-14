@@ -66,7 +66,7 @@ def json_to_csv(json_file_name):
 if __name__ == '__main__':
     json_data = get_weather_data()
     rep = '/app/data/'
-    json_file_name = f"open-meteo-{datetime.now().strftime('%Y-%m-%d %H-%M')}"
+    json_file_name = "open-meteo-weather-data"
     if json_data:
         print("Weather data successfully fetched from Open-Meteo API.")
         with open(f'{rep}/raw/{json_file_name}.json', 'w') as f:

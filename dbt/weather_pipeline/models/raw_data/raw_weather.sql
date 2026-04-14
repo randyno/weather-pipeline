@@ -10,4 +10,4 @@ SELECT
     cloud_cover, 
     wind_speed_10m, 
     precipitation
-FROM read_csv_auto('/app/data/dbt_raw/open-meteo-2026-04-10 15-33.csv', header=True)
+FROM read_csv_auto('/app/data/dbt_raw/open-meteo-weather-data.csv', header=True)
