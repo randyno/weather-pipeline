@@ -9,3 +9,5 @@ target/
 
 *.duckdb
 *.duckdb.wal
+
+!data/.gitkeep
