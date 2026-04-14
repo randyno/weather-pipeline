@@ -1,5 +1,5 @@
-data/raw/*
-data/dbt_raw/*
+data/raw/*.json
+data/dbt_raw/*.csv
 dbt/logs/
 target/
 
