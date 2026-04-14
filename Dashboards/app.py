@@ -26,18 +26,18 @@ if __name__ == "__main__":
         conn = get_db_connection()
         daily = pd.read_sql(f"SELECT * FROM weather_{TARGET}.daily_aggregates", conn)
         hourly = pd.read_sql(f"SELECT * FROM weather_{TARGET}.hourly_aggregates", conn)
-
+        
         st.subheader("Daily Aggregates")
         st.write("The hottest day was on " \
-                + str(daily[  daily['max_temperature_2m'] == daily['max_temperature_2m'].max()  ]['day'])\
-                + " with a temperature of " + str(daily['max_temperature_2m'].max()) + "°C")
+                + str(daily[  daily['avg_temperature_2m'] == daily['avg_temperature_2m'].max()  ]['day'].iloc[0])\
+                + " with a temperature of " + str(daily['avg_temperature_2m'].max()) + "°C")
         
         st.subheader("Temperature Trends over the days")
         st.line_chart(daily.set_index('day')[['avg_temperature_2m', 'max_temperature_2m', 'min_temperature_2m']])
         st.subheader("Hourly Aggregates")
         st.write("The hottest hour was on " \
-                + hourly[  hourly['max_temperature_2m'] == hourly['max_temperature_2m'].max()  ]['hours']\
-                + " with a temperature of " + hourly['max_temperature_2m'].max().astype(str) + "°C")
+                + hourly[  hourly['avg_temperature_2m'] == hourly['avg_temperature_2m'].max()  ]['hours'].iloc[0] \
+                + " with a temperature of " + hourly['avg_temperature_2m'].max().astype(str) + "°C")
     
         st.subheader("Temperature Trends within the day")
         st.line_chart(hourly.set_index('hours')[['avg_temperature_2m', 'max_temperature_2m', 'min_temperature_2m']])
