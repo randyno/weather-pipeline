@@ -2,7 +2,7 @@ data/raw/*.json
 data/dbt_raw/*.csv
 dbt/logs/
 target/
-
+__pycache__/
 .devcontainer/
 .vscode/
 .user.yml
