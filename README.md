@@ -50,7 +50,7 @@ dbt · DuckDB · Streamlit · Docker
 ## 2. Le Guide d'Installation & d'Exploitation (Ops Manual)
 
 
-### Pré-requis : 
+### <u>Pré-requis : </u>
 Docker et Docker Compose installés.
 
 ### Procédure de démarrage à froid (Cold Start) :
@@ -59,13 +59,13 @@ Lancer les 3 commandes suivantes successivement :
 * `docker compose up weather-db` : Pour l'ingestion initiale. 
 Le micro-service telecharge via l'API open-meteo, les donnees meteo commencant le 1er Mars et s'arrete a la date du jour
 
-`docker compose run weather_dbt` : Pour transformer les données.
+* `docker compose run weather_dbt` : Pour transformer les données.
 DBT transforme les donnees et les stocke dans une BDD duckDB.
 
-`docker compose up dashboards` : Pour lancer le dashboard.
+* `docker compose up dashboards` : Pour lancer le dashboard.
 Streamlit affiche un visuel des donnees aggregees en lisant la base de donnees
 
-### Maintenance : Explique comment mettre à jour les données (relancer le service d'ingestion).
+### Maintenance : 
 Si les donnees ne sont pas a jour, lancer la commande `docker compose up weather-db` et a la fin de l'execution, les donnees seront a jour.
 
 ### Depannage de la base de donnees :
