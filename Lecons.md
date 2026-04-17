@@ -9,3 +9,5 @@ Don't use a ubuntu image for the three micro services. It will be too heavy to b
 
     * surcharge du `Dockerfile` et de `requirements.txt` On se rend compte que chaque micro-service est assez different des autres et exploite des dependences uniques. Importer tant de librairies python dans l'image va la rendre trop lourde. La solution serait donc d'avoir pour chaque micro-service son propre Dockerfile et ses propres librairies python.
 
+## DBT 
+  Il est essentiel de preciser la localisation du fichier `profiles.yml` a dbt sinon, il va le chercher dans ~/.dbt/
