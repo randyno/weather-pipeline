@@ -89,6 +89,11 @@ Ou alors le supprimer manuellement
 4. Vérification des fichiers .wal : 
 S'il existe un fichier .wal (Write-Ahead Log) dans le dossier /data alors que les containers sont éteints, il faut aussi le supprimer ; c'est souvent lui qui contient les transactions interrompues causant des soucis au redémarrage.
 
+
+#### Ports deja utilises : 
+Si vous avez un conflit avec les ports (Un programme sur votre PC utilise deja les ports que les docker souhaite exploiter), alors il faudra les changer dans le fichier `docker-compose.yml` a la racine du projet.
+
+1. Ouvrir le fichier
 ### Autres :
 
 - Comment vérifier les logs d'un conteneur : `docker logs <container_name>`.
