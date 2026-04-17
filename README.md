@@ -2,50 +2,93 @@
 
 Un pipeline ELT météo en temps réel, pensé pour être clonable et fonctionnel en 2 commandes.
 
-## Source de données :
+## 1. Infos generales sur le projet
+
+### Source de données :
 API Open Meteo (gratuite, sans clé)
-## Stack :
-Astro CLI (Airflow léger) · dbt · DuckDB · Streamlit · Docker
 
-## Architecture :
-  1. DAG Airflow  →  fetch l'API et stocke un CSV brut dans data/raw/
-  2. dbt staging  →  nettoyage + typage des données brutes
-  3. dbt mart     →  agrégats prêts à consommer (moyennes, tendances)
-  4. Dashboard    →  Streamlit qui lit les marts et affiche les courbes
+### Stack :
+dbt · DuckDB · Streamlit · Docker
 
-## Structure du repo :
-  weather-pipeline/
+### Architecture :
   
-  ├── dags/         → weather_dag.py
+  weather-pipeline/
+
+  ├── docker-compose.yml
+
+  ├── weather-db/
+  
+  │   ├── main.py
+
+  │   ├── Dockerfile
+
+  │   ├── requirements.txt
   
   ├── dbt/
+
+  │   ├── Dockerfile
+
+  │   ├── requirements.txt
   
-  │   ├── models/
+  │   ├── weather_pipeline/ # dbt project
   
-  │   │   ├── staging/
+  ├── data/raw/*.json
+
+  ├── data/raw/weather-
   
-  │   │   └── mart/
+  ├── Dashboards/
   
-  │   └── tests/
-  
-  ├── data/raw/
-  
-  ├── dashboard/    → app.py
-  
-  ├── Dockerfile
-  
+  │   ├── app.py
+
+  │   ├── Dockerfile
+
+  │   ├── requirements.txt
+
   └── README.md
   
-── CE QU'IL RESTE À DÉCIDER ───────────────
 
-  • Quelle(s) ville(s) ? → Paris + une autre suggérée
-  • Quelles métriques ?  → température, précipitations, vent, humidité
-  • Quelle fréquence ?   → toutes les heures ou une fois par jour
+## 2. Le Guide d'Installation & d'Exploitation (Ops Manual)
 
 
-── PLAN DE TRAVAIL (2-3h) ──────────────────
+### Pré-requis : 
+Docker et Docker Compose installés.
 
-  45 min  → DAG Airflow : fetch API + stockage CSV
-  60 min  → Modèles dbt : 1 staging + 1 mart + 2 tests qualité
-  30 min  → Dashboard Streamlit
-  30 min  → README + docker compose up + push GitHub
+### Procédure de démarrage à froid (Cold Start) :
+Lancer les 3 commandes suivantes successivement :
+
+* `docker compose up weather-db` : Pour l'ingestion initiale. 
+Le micro-service telecharge via l'API open-meteo, les donnees meteo commencant le 1er Mars et s'arrete a la date du jour
+
+`docker compose run weather_dbt` : Pour transformer les données.
+DBT transforme les donnees et les stocke dans une BDD duckDB.
+
+`docker compose up dashboards` : Pour lancer le dashboard.
+Streamlit affiche un visuel des donnees aggregees en lisant la base de donnees
+
+### Maintenance : Explique comment mettre à jour les données (relancer le service d'ingestion).
+Si les donnees ne sont pas a jour, lancer la commande `docker compose up weather-db` et a la fin de l'execution, les donnees seront a jour.
+
+### Depannage de la base de donnees :
+
+#### Problème : Base de données corrompue ou Verrouillée (Locked)
+Si DuckDB affiche une erreur de type Database Error: `Could not set write lock` de façon persistante ou si le fichier `data/dbt_raw/<nom_bdd>.duckdb` semble corrompu, suivez ces étapes :
+
+1. Arrêt des services : 
+Stopper tous les conteneurs pour libérer les accès au fichier :
+`docker compose down --remove-ophans`
+
+2. Suppression manuelle du fichier : 
+DuckDB étant une base de données "monolithique" stockée dans un seul fichier, la méthode la plus propre pour repartir de zéro est de supprimer le fichier physique dans le volume monté :
+
+`rm ./data/weather_data.duckdb` (ou le nom exact de ton fichier). 
+Ou alors le supprimer manuellement
+
+3. Réinitialisation complète : Relancer la chaîne d'ingestion et de transformation pour recréer une base saine :
+`docker compose up weather-db` puis `docker compose run weather_dbt dbt run`.
+
+4. Vérification des fichiers .wal : 
+S'il existe un fichier .wal (Write-Ahead Log) dans le dossier /data alors que les containers sont éteints, il faut aussi le supprimer ; c'est souvent lui qui contient les transactions interrompues causant des soucis au redémarrage.
+
+### Autres :
+
+- Comment vérifier les logs d'un conteneur : `docker logs <container_name>`.

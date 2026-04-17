@@ -1,13 +1,19 @@
+# Data
 data/raw/*.json
 data/dbt_raw/*.csv
-dbt/logs/
+*.duckdb
+*.duckdb.wal
+
+# dbt 
+logs/
 target/
+dbt_packages/
+
+# Settings files
 __pycache__/
 .devcontainer/
 .vscode/
 .user.yml
 
-*.duckdb
-*.duckdb.wal
-
+# To keep
 !data/*.gitkeep
