@@ -50,11 +50,16 @@ dbt · DuckDB · Streamlit · Docker
 ## 2. Le Guide d'Installation & d'Exploitation (Ops Manual)
 
 
-### <u>Pré-requis : </u>
-Docker et Docker Compose installés.
+### Pré-requis :
+
+- `Docker` et `Docker Compose` installés
+- Si vous êtes sur MAC ou Windows : installer aussi `Docker Desktop` 
+- Si vous êtes sur Linux : installer `Docker Engine`
 
 ### Procédure de démarrage à froid (Cold Start) :
-Lancer les 3 commandes suivantes successivement :
+Après avoir cloné le projet, assurez-vous que Docker Desktop soit lancé.
+
+Lancer les commandes suivantes successivement :
 
 * `docker compose up weather-db` : Pour l'ingestion initiale. 
 Le micro-service telecharge via l'API open-meteo, les donnees meteo commencant le 1er Mars et s'arrete a la date du jour
@@ -74,13 +79,13 @@ Si les donnees ne sont pas a jour, lancer la commande `docker compose up weather
 Si DuckDB affiche une erreur de type Database Error: `Could not set write lock` de façon persistante ou si le fichier `data/dbt_raw/<nom_bdd>.duckdb` semble corrompu, suivez ces étapes :
 
 1. Arrêt des services : 
-Stopper tous les conteneurs pour libérer les accès au fichier :
+Stopper tous les conteneurs pour libérer les accès au fichier `.duckdb`:
 `docker compose down --remove-ophans`
 
-2. Suppression manuelle du fichier : 
+2. Suppression du fichier `.duckdb`: 
 DuckDB étant une base de données "monolithique" stockée dans un seul fichier, la méthode la plus propre pour repartir de zéro est de supprimer le fichier physique dans le volume monté :
 
-`rm ./data/weather_data.duckdb` (ou le nom exact de ton fichier). 
+`rm ./data/weather_data.duckdb` . 
 Ou alors le supprimer manuellement
 
 3. Réinitialisation complète : Relancer la chaîne d'ingestion et de transformation pour recréer une base saine :
@@ -90,10 +95,9 @@ Ou alors le supprimer manuellement
 S'il existe un fichier .wal (Write-Ahead Log) dans le dossier /data alors que les containers sont éteints, il faut aussi le supprimer ; c'est souvent lui qui contient les transactions interrompues causant des soucis au redémarrage.
 
 
-#### Ports deja utilises : 
-Si vous avez un conflit avec les ports (Un programme sur votre PC utilise deja les ports que les docker souhaite exploiter), alors il faudra les changer dans le fichier `docker-compose.yml` a la racine du projet.
+#### Ports déjà utilisés : 
+Si vous avez un conflit avec les ports (Un programme sur votre PC utilise déjà les ports que les docker souhaite exploiter), alors il faudra les changer dans le fichier `docker-compose.yml` à la racine du projet.
 
-1. Ouvrir le fichier
 ### Autres :
 
 - Comment vérifier les logs d'un conteneur : `docker logs <container_name>`.
