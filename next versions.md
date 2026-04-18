@@ -3,7 +3,7 @@
 1. Figer les versions des dépendances python.
 
 
-# Fonctionnalites et changement a effectuer dans l'avenir
+# Fonctionnalités et changements à effectuer dans l'avenir
 
 1. Securite et protection
 Creer un utilisateur non-root `appuser` dans tous les dockerfiles afin de prevenir les attaques sur la chaine d'approvisionnement.
