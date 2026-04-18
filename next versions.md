@@ -1,3 +1,8 @@
+
+# Améliorations urgentes :
+1. Figer les versions des dépendances python.
+
+
 # Fonctionnalites et changement a effectuer dans l'avenir
 
 1. Securite et protection
