@@ -1,8 +1,8 @@
 # weather-pipeline
 
-Un pipeline ELT météo en temps réel, pensé pour être clonable et fonctionnel en 2 commandes.
+Un pipeline ELT météo, pensé pour être clonable et fonctionnel en 2 commandes.
 
-## 1. Infos generales sur le projet
+## 1. Infos générales sur le projet
 
 ### Source de données :
 API Open Meteo (gratuite, sans clé)
