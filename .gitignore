@@ -11,6 +11,7 @@ dbt_packages/
 
 # Settings files
 __pycache__/
+.pytest_cache
 .devcontainer/
 .vscode/
 .user.yml
