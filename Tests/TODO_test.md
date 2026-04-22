@@ -1,9 +1,9 @@
 # Tests a realiser 
 
 ## 1. Weather-db
-- Vérifier que le fichier weather_*.csv est bien généré []
-- Vérifier qu'il contient les données de toutes les journées entre le 1er mars et la date du jour
+- Vérifier que le fichier weather_*.csv est bien généré [v]
 - Vérifier que toutes les colonnes sont bien présentes et bien nommées
+- Vérifier qu'il contient les données de toutes les journées entre le 1er mars et la date du jour [x]
 
 ## 2. Weather_dbt
 - Vérifier que le fichier .duckdb existe
