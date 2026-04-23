@@ -22,7 +22,7 @@
 
 6. The "Empty Table" Check: Alerte si la table `daily_aggregates` est completement vide apres l'execution de dbt run
 
-7. Data Continuity : Pas de trou dans les donnees 
+7. Data Continuity : Pas de trou dans les donnees. 
 
 ### Logic Tests
 1. The "Range Math" Check: Verify that temperature_range is exactly equal to max_temperature_2m - min_temperature_2m.

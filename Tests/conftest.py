@@ -27,6 +27,7 @@ def data_config():
     return {
         "data_relative_path" : "../data/dbt_raw/",
         "raw_data_file_name" :"open-meteo-weather-data.csv",
+        "target" : "dev", # prod/dev
         "weather_data_columns" : ["insertion_time","datetime_hour","temperature_2m",
                                 "relative_humidity_2m", "apparent_temperature","rain",
                                 "cloud_cover","wind_speed_10m","precipitation"],

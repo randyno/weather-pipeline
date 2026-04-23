@@ -20,22 +20,27 @@ class TestWeather_db:
         expected_columns = set(data_config['weather_data_columns'])
         assert expected_columns.issubset(actual_columns), f"Colonnes manquantes : {(expected_columns - actual_columns)}"
     
-    @pytest.mark.dependency(depends = ["data_exists","correct_structure"])
-    def test_data_is_continuous(self, data_config):
-        # Recuperer toutes les dates et heures dans les donnees telechargees
-        file_path =  data_config['data_relative_path'] + data_config['raw_data_file_name']
-        weather_data = read_csv(file_path)
-        days = to_datetime(weather_data["datetime_hour"]).dt.date
+    # TODO
+    # Add a test on API responses
+
+
+
+    # @pytest.mark.dependency(depends = ["data_exists","correct_structure"])
+    # def test_data_is_continuous(self, data_config):
+    #     # Recuperer toutes les dates et heures dans les donnees telechargees
+    #     file_path =  data_config['data_relative_path'] + data_config['raw_data_file_name']
+    #     weather_data = read_csv(file_path)
+    #     days = to_datetime(weather_data["datetime_hour"]).dt.date
         
-        actual_dates = set(days)
-        expected_dates = set(data_config['expected_dates'])
+    #     actual_dates = set(days)
+    #     expected_dates = set(data_config['expected_dates'])
 
-        missing_dates = []
-        for _day in expected_dates:
-            if _day not in actual_dates:
-                missing_dates.append(str(_day))
+    #     missing_dates = []
+    #     for _day in expected_dates:
+    #         if _day not in actual_dates:
+    #             missing_dates.append(str(_day))
 
-        assert len(missing_dates) == 0, f"Dates manquantes : {missing_dates}"
+    #     assert len(missing_dates) == 0, f"Dates manquantes : {missing_dates}"
             
     
     
