@@ -32,7 +32,7 @@ jobs:
       # WEATHER_DBT :
       # Build dbt models and run dbt tests
       - name: Build the dbt image
-        run: docker compose up --build --exit-code-from weather_dbt dbt run
+        run: docker compose up --build --exit-code-from weather_dbt
 
       - name: Run dbt tests on data
         run: dbt test
