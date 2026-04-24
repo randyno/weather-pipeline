@@ -28,7 +28,15 @@ jobs:
       # Run the Python Tests 
       - name: Run pytest on the generated file
         run: pytest Tests/test_weather-db.py
-  
+      # Clean docker ressources
+      - name: Clean ressources
+        run: docker system prune -f
+      
+      # Check the state of the RAW
+      - name: Check RAM
+        run: free -h
+
+        
       # WEATHER_DBT :
       # Build dbt models and run dbt tests
       - name: Build the dbt image
