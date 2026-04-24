@@ -35,18 +35,10 @@ jobs:
         run: free -h
 
       # WEATHER_DBT :
-      # Grant user the permissions on workspace
-      - name: Grant permissions
-        run: sh -c "sudo chown -R $USER:$USER ${{ github.workspace }}"
-      
       # Run dbt test in schema.yml
       - name: Run dbt tests on data
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/dbt/weather_pipeline
-        run: |
-          cd ./dbt/weather_pipeline/
-          dbt test
-        # Run python tests for database integrity
+        run: docker compose run dbt test
+      # Run python tests for database integrity
       - name: Check database integrity
         run: pytest Tests/test_weather_dbt.py
 
