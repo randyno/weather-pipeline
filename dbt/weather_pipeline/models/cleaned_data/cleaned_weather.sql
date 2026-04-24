@@ -1,6 +1,6 @@
 
 
-{{ config(materialized='table') }}
+{{ config(materialized='table', partitioned_by = ['day'])}}
 
 WITH source_data AS (
     SELECT DISTINCT

@@ -27,7 +27,7 @@ models:
         type: float
         data_tests:
           - not_null
-      - name: relative_humidity_2m
+      - name: humidity
         type: int
         data_tests:
           - not_null
@@ -43,7 +43,7 @@ models:
         type: int
         data_tests:
           - not_null
-      - name: wind_speed_10m
+      - name: wind_speed
         type: float
         data_tests:
           - not_null

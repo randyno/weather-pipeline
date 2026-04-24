@@ -22,7 +22,7 @@ services:
     environment:
       - DBT_PROFILES_DIR=/app/dbt/weather_pipeline/
     command: #["dbt", "run", "--profiles-dir", "/app/dbt/weather_pipeline/"]
-        sh -c "dbt run --profiles-dir /app/dbt/weather_pipeline && dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
+        sh -c "dbt run --profiles-dir /app/dbt/weather_pipeline && dbt docs generate"  # && dbt docs serve --port 8080 --host 0.0.0.0"
   dashboards:
     build:
       context: ./Dashboards/

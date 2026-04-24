@@ -6,6 +6,31 @@ models:
         data_tests:
           - not_null
           - unique
+          - no_missing_date
+      - name: total_rain
+        description: "Cumul des pluies sur 24h"
+        type: float
+        data_tests:
+          - not_null
+          - is_positive
+      - name: total_precipitation
+        description: "Cumul des precipitations sur 24h"
+        type: float
+        data_tests:
+          - not_null
+          - is_positive
+      - name: avg_humidity
+        type: float
+        data_tests:
+          - is_between:
+              min_value: 0
+              max_value: 100
+      - name: max_temperature_2m
+        type: float
+        data_tests:
+          - is_between:
+              min_value: 0
+              max_value: 50
   - name: hourly_aggregates
     columns:
       - name: hours
