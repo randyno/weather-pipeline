@@ -1,3 +1,4 @@
-pytest
-pytest-dependency
-pandas
+dbt
+pytest==9.0.3
+pytest-dependency==0.6.1
+pandas==2.2.2
