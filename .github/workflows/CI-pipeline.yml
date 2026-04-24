@@ -37,7 +37,7 @@ jobs:
       # WEATHER_DBT :
       # Run dbt test in schema.yml
       - name: Run dbt tests on data
-        run: dbt test --profiles-dir /app/dbt/weather_pipeline
+        run: dbt test --profiles-dir ./dbt/weather_pipeline
         # Run python tests for database integrity
       - name: Check database integrity
         run: pytest Tests/test_weather_dbt.py
