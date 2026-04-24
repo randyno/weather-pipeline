@@ -21,9 +21,9 @@ jobs:
       - name: Python libraries
         run: pip install -r Tests/requirements.txt
 
-      # BUILD ALL THE CONTAINERS  
-      - name: Build all the containers
-        run: docker compose up
+      # BUILD THE FIRST TWO CONTAINERS
+      - name: Build the containers
+        run: docker compose up weather-db ; docker compose up weather_dbt
 
       # WEATHER-DB: 
       # Run the Python Tests 
