@@ -10,6 +10,12 @@ services:
     command: ["python3", "main.py"]
     restart: no
   weather_dbt:
+    deploy:
+      resources:
+        limits:
+          memory: 2.5G
+        reservations:
+          memory: 1G
     build:
       context: ./dbt/
       dockerfile: Dockerfile
