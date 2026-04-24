@@ -21,32 +21,31 @@ jobs:
       - name: Python libraries
         run: pip install -r Tests/requirements.txt
 
+      # BUILD ALL THE CONTAINERS  
+      - name: Build all the containers
+        run: docker compose up
+
       # WEATHER-DB: 
-      # Build the container 
-      - name: Build the image
-        run: docker compose up --exit-code-from weather-db
       # Run the Python Tests 
       - name: Run pytest on the generated file
         run: pytest Tests/test_weather-db.py
-      # Shut down and delete the orphans
-      - name: Shut down the container
-        run: docker compose down --remove-orphans
-      # Clean docker ressources
-      - name: Clean ressources
-        run: docker system prune -f
       
       # Check the state of the RAW
       - name: Check RAM
         run: free -h
 
-
       # WEATHER_DBT :
-      # Build dbt models and run dbt tests
-      - name: Build the dbt image
-        run: docker compose up --exit-code-from weather_dbt
       # Run dbt test in schema.yml
       - name: Run dbt tests on data
         run: dbt test
         # Run python tests for database integrity
       - name: Check database integrity
         run: pytest Tests/test_weather_dbt.py
+
+      # SHUT DOWN ALL THE CONTAINERS AND KILL THE ORPHANS
+      # Shut down and delete the orphans
+      - name: Shut down the container
+        run: docker compose down --remove-orphans
+      # Clean docker ressources
+      - name: Clean ressources
+        run: docker system prune -f
