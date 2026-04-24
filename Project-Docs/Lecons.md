@@ -12,3 +12,7 @@ Don't use a ubuntu image for the three micro services. It will be too heavy to b
 ## DBT
   - `dbt init` cree un nouveau projet avec les different repertoires a personaliser.
   Il est essentiel de preciser la localisation du fichier `profiles.yml` a dbt sinon, il va le chercher dans ~/.dbt/
+
+## GitHub Actions 
+  - Chaque job dans les workflow s'execute sur un serveur separe. Une fois l'execution terminee, le serveur est detruit.
+  - `needs` ne permet de transmettre les parametres entre serveurs de jobs differents. Il permet seulement d'organiser chronologiquement les jobs

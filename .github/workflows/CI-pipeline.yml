@@ -2,11 +2,12 @@ name: Tests on Microservices
 
 on: [push]
 
-jobs:
-  setup: 
+jobs: 
+  CI-micro-services:
     runs-on: ubuntu-latest
     steps:
-      # CRITICAL: This clones your repo onto the runner
+      # SETUP THE ENVIRONMENT
+      # Clone the repo
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -20,24 +21,19 @@ jobs:
       - name: Python libraries
         run: pip install -r Tests/requirements.txt
 
-  weather-db:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      # Build the container so it returns an exit code 
+      # WEATHER-DB: 
+      # Build the container 
       - name: Build the image
         run: docker compose up --build --exit-code-from weather-db
       # Run the Python Tests 
       - name: Run pytest on the generated file
         run: pytest Tests/test_weather-db.py
   
-  weather_dbt:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
+      # WEATHER_DBT :
       # Build dbt models and run dbt tests
       - name: Build the image
-        run: docker compose up --build --exit-code-from weather_dbt \
+        run: docker compose run --build --exit-code-from weather_dbt \
                 dbt run ; dbt test
+        # Run python tests for database integrity
       - name: Check database integrity
         run: pytest Tests/test_weather_dbt.py
