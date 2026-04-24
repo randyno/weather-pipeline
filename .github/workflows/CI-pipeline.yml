@@ -43,8 +43,8 @@ jobs:
       # WEATHER_DBT :
       # Build dbt models and run dbt tests
       - name: Build the dbt image
-        run: docker compose up --build --exit-code-from weather_dbt
-
+        run: docker compose up --exit-code-from weather_dbt
+      # Run dbt test in schema.yml
       - name: Run dbt tests on data
         run: dbt test
         # Run python tests for database integrity
