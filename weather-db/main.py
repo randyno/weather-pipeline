@@ -11,7 +11,7 @@ def get_weather_data():
         dict: A dictionary containing the weather data.
     """
     base_url = "https://api.open-meteo.com/v1/forecast?"
-    start_date = datetime(2026, 3, 1).strftime('%Y-%m-%d')
+    start_date = datetime(2026, 7, 1).strftime('%Y-%m-%d')
     end_date = datetime.now().strftime('%Y-%m-%d')
     Latitude, Longitude = 49.683333, 1.400000  # Massy, France
     
